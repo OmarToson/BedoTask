@@ -9,14 +9,15 @@ public class PumpSpeedControl : MonoBehaviour
 
     public Text PumpSpeed; //to show result of pump control
 
-    static float speedOutput;
+    [HideInInspector]
+    public static float speedOutput;
 
-    static float p_ele;
+    static double p_ele, p1, p2;
 
     public AudioSource motorSound;
 
     // public Button pumpBTN;
-    public void PumpSpeedControlUPFunc(string direction)
+    public void PumpSpeedControlFunc(string direction)
     {
         if(direction == "UP" && ns<=10)
         {
@@ -52,5 +53,18 @@ public class PumpSpeedControl : MonoBehaviour
     public void PeleFun()
     {
         p_ele = ((0.0004f * speedOutput * speedOutput) - (0.0902f * speedOutput) + (23.368f));
+    }
+
+    public void pressureIncrease1()
+    {
+        if (!WaterFlow.waterFlowIsOn)
+        {
+            p1 = -(0.000072) * speedOutput;
+        }    
+    }
+
+    public void pressureIncrease2()
+    {
+        p2 = (0.0015) * speedOutput;
     }
 }
